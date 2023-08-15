@@ -9,12 +9,24 @@ import com.company.usertask.dto.response.UserResponseDTO;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
-@Mapper(componentModel = "spring")
 @Component
-public interface AccountMapper {
+public class AccountMapper {
 
-    Account accountRequestDTOtoAccount(AccountRequestDTO accountRequestDTO);
+    public Account accountRequestDTOtoAccount(AccountRequestDTO accountRequestDTO){
+        return Account.builder()
 
-    AccountResponseDTO accountToAccountResponseDTO(Account account);
+                .build();
+    }
+
+    public AccountResponseDTO accountToAccountResponseDTO(Account account){
+        return AccountResponseDTO.builder()
+                .accountId(account.getAccountId())
+                .accountNumber(account.getAccountNumber())
+                .email(account.getEmail())
+                .username(account.getUsername())
+                .password(account.getPassword())
+                .money(account.getMoney())
+                .build();
+    }
 
 }

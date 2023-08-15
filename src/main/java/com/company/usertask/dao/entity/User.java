@@ -1,6 +1,10 @@
 package com.company.usertask.dao.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -9,6 +13,10 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 public class User {
@@ -25,76 +33,15 @@ public class User {
     private String lastName;
 
     @CreationTimestamp
-    @Column(name = "created_at",columnDefinition = "timestamp default now()", nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "user_created_at",columnDefinition = "timestamp default now()", nullable = false)
+    private LocalDateTime userCreatedAt = LocalDateTime.now();
 
     @UpdateTimestamp
-    @Column(name = "updated_at",columnDefinition = "timestamp default now()", nullable = false)
-    private LocalDateTime updatedAt = LocalDateTime.now();
+    @Column(name = "user_updated_at",columnDefinition = "timestamp default now()", nullable = false)
+    private LocalDateTime userUpdatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private Set<Account> accounts;
-
-    public User() {
-    }
-
-    public User(Long userId, String firstName,
-                String lastName, LocalDateTime createdAt, LocalDateTime updatedAt, Set<Account> accounts) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.accounts = accounts;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public Set<Account> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
 
     @Override
     public String toString() {
@@ -102,8 +49,8 @@ public class User {
                 "userId=" + userId +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", createdAt=" + userCreatedAt +
+                ", updatedAt=" + userUpdatedAt +
                 ", accounts=" + accounts +
                 '}';
     }

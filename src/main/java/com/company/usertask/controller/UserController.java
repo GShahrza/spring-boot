@@ -4,6 +4,7 @@ import com.company.usertask.dao.entity.User;
 import com.company.usertask.dto.response.UserResponseDTO;
 import com.company.usertask.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,5 +23,10 @@ public class UserController {
     @GetMapping
     public List<UserResponseDTO> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @GetMapping(path = "/{id}")
+    public UserResponseDTO getUserById(@PathVariable Long id){
+        return  userService.getByIdUser(id);
     }
 }
