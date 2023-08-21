@@ -1,18 +1,18 @@
-package com.company.usertask.dao.entity;
+package com.company.usertask.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-@Data
+
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "account")
@@ -36,7 +36,7 @@ public class Account {
     private String accountNumber;
 
     @Column(name = "money",columnDefinition = "float default 0")
-    private Double money = 0.0;
+    private BigDecimal money = BigDecimal.ZERO;
 
     @Column(name = "is_active", columnDefinition = "boolean default true")
     private Boolean isActive = true;

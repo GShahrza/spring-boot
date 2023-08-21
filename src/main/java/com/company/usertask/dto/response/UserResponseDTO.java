@@ -6,9 +6,10 @@ import lombok.experimental.FieldDefaults;
 
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponseDTO {
@@ -17,7 +18,6 @@ public class UserResponseDTO {
     String firstName;
     String lastName;
     Set<AccountResponseDTO> accounts;
-
 
     @Override
     public String toString() {

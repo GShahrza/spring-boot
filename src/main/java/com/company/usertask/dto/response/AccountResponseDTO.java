@@ -3,9 +3,12 @@ package com.company.usertask.dto.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
+import java.math.BigDecimal;
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AccountResponseDTO {
@@ -15,7 +18,7 @@ public class AccountResponseDTO {
     String password;
     String email;
     String accountNumber;
-    Double money = 0.0;
+    BigDecimal money = BigDecimal.ZERO;
 
     @Override
     public String toString() {

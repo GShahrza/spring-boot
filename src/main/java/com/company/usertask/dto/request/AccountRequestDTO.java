@@ -1,15 +1,23 @@
 package com.company.usertask.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class AccountRequestDTO {
 
-    private String username;
+    String username;
+    String password;
+    String email;
+    String accountNumber;
+    BigDecimal money = BigDecimal.ZERO;
+
 }

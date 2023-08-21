@@ -1,15 +1,22 @@
 package com.company.usertask.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.company.usertask.dto.response.AccountResponseDTO;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
-@Data
+import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
+@Getter
+@Setter
 @Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserRequestDTO {
 
-    private String firstName;
+    String firstName;
+    String lastName;
+    Set<AccountRequestDTO> accounts;
+
+
 }

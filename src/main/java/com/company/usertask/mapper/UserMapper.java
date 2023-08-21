@@ -1,11 +1,9 @@
 package com.company.usertask.mapper;
 
-import com.company.usertask.dao.entity.Account;
-import com.company.usertask.dao.entity.User;
+import com.company.usertask.domain.User;
 import com.company.usertask.dto.request.UserRequestDTO;
 import com.company.usertask.dto.response.UserResponseDTO;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
@@ -18,6 +16,8 @@ public class UserMapper {
 
     public User userRequestDTOtoUser(UserRequestDTO userRequestDTO){
         return User.builder()
+                .firstName(userRequestDTO.getFirstName())
+                .lastName(userRequestDTO.getLastName())
                 .build();
     }
 

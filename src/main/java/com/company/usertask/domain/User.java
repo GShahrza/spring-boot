@@ -1,21 +1,19 @@
-package com.company.usertask.dao.entity;
+package com.company.usertask.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @Builder
 @Entity
 @Table(name = "users")
@@ -40,7 +38,7 @@ public class User {
     @Column(name = "user_updated_at",columnDefinition = "timestamp default now()", nullable = false)
     private LocalDateTime userUpdatedAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private Set<Account> accounts;
 
     @Override
