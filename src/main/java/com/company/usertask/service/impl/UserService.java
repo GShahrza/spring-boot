@@ -17,6 +17,9 @@ import com.company.usertask.util.result.SuccessResult;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,6 +39,7 @@ public class UserService implements IUserService {
 
     final AccountMapper accountMapper;
 
+    @Cacheable(cacheNames = {"users"},key = "0")
     @Override
     public DataResult<List<UserResponseDTO>> getAllUsers() {
         List<UserResponseDTO> users =  userRepository.findAll().stream()
@@ -44,12 +48,14 @@ public class UserService implements IUserService {
         return new SuccessDataResult<>(users,"All users are listed.");
     }
 
+    @Cacheable(cacheNames = {"users"}, key = "#id")
     @Override
     public DataResult<UserResponseDTO> getUserById(Long id) {
         UserResponseDTO userResponseDTO =  userMapper.userToUserResponseDTO(getUser(id));
         return new SuccessDataResult<>(userResponseDTO);
     }
 
+    @CacheEvict(cacheNames = {"users"} , key = "0")
     @Override
     public Result addUser(UserRequestDTO userRequestDTO) {
         Validation.validateUserRequest(userRequestDTO);
@@ -68,9 +74,10 @@ public class UserService implements IUserService {
         return new SuccessResult("new user added.");
     }
 
+    @CachePut(cacheNames = {"users"},key = "#userId")
     @Override
-    public Result updateUser(Long id,UserRequestDTO userRequestDTO) {
-        User user = getUser(id);
+    public Result updateUser(Long userId,UserRequestDTO userRequestDTO) {
+        User user = getUser(userId);
         user.setFirstName(userRequestDTO.getFirstName());
         user.setLastName(userRequestDTO.getLastName());
 
@@ -81,9 +88,10 @@ public class UserService implements IUserService {
         return new SuccessResult(String.format("User %s %s updated",user.getFirstName(),user.getLastName()));
     }
 
+    @CacheEvict(cacheNames = {"users"},key = "#userId")
     @Override
-    public Result delete(Long id) {
-        User user = getUser(id);
+    public Result delete(Long userId) {
+        User user = getUser(userId);
         userRepository.delete(user);
         return new SuccessResult(String.format("User %s deleted",user.getFirstName()));
     }

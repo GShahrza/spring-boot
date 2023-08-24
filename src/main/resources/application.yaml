@@ -1,4 +1,6 @@
 spring:
+  cache:
+    type:
   datasource:
     url: jdbc:postgresql://localhost:5432/user
     username: postgres
@@ -10,6 +12,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
   sql:
     init:
       mode: always
