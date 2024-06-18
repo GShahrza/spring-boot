@@ -9,6 +9,7 @@ import com.company.usertask.mapper.AccountMapper;
 import com.company.usertask.domain.Account;
 import com.company.usertask.repository.AccountRepository;
 import com.company.usertask.service.IAccountService;
+import com.company.usertask.service.spesification.AccountSpecification;
 import com.company.usertask.util.Validation;
 import com.company.usertask.util.result.DataResult;
 import com.company.usertask.util.result.Result;
@@ -36,7 +37,8 @@ public class AccountService implements IAccountService {
         int pageNumber = pageCriteria.getPage() == null ? 0 : pageCriteria.getPage();
         int count = pageCriteria.getCount() == null ? 10 : pageCriteria.getCount();
 
-        List<AccountResponseDTO> accounts =  accountRepository.findAll(PageRequest.of(pageNumber, count, Sort.by("id").descending())).stream()
+        List<AccountResponseDTO> accounts =  accountRepository.findAll(new AccountSpecification(accountCriteria), PageRequest.of(pageNumber, count, Sort.by("id").descending()))
+                .stream()
                 .map(accountMapper::accountToAccountResponseDTO)
                 .toList();
         return new SuccessDataResult<>(accounts,"all accounts are listed.");
