@@ -1,6 +1,8 @@
 package com.company.usertask.service.impl;
 
+import com.company.usertask.dto.request.AccountCriteria;
 import com.company.usertask.dto.request.AccountRequestDTO;
+import com.company.usertask.dto.request.PageCriteria;
 import com.company.usertask.dto.response.AccountResponseDTO;
 import com.company.usertask.exception.AccountNotFoundException;
 import com.company.usertask.mapper.AccountMapper;
@@ -13,6 +15,8 @@ import com.company.usertask.util.result.Result;
 import com.company.usertask.util.result.SuccessDataResult;
 import com.company.usertask.util.result.SuccessResult;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,8 +31,12 @@ public class AccountService implements IAccountService {
     private final AccountMapper accountMapper;
 
     @Override
-    public DataResult<List<AccountResponseDTO>> getAllAccounts() {
-        List<AccountResponseDTO> accounts =  accountRepository.findAll().stream()
+    public DataResult<List<AccountResponseDTO>> getAllAccounts(PageCriteria pageCriteria, AccountCriteria accountCriteria) {
+
+        int pageNumber = pageCriteria.getPage() == null ? 0 : pageCriteria.getPage();
+        int count = pageCriteria.getCount() == null ? 10 : pageCriteria.getCount();
+
+        List<AccountResponseDTO> accounts =  accountRepository.findAll(PageRequest.of(pageNumber, count, Sort.by("id").descending())).stream()
                 .map(accountMapper::accountToAccountResponseDTO)
                 .toList();
         return new SuccessDataResult<>(accounts,"all accounts are listed.");
@@ -107,7 +115,6 @@ public class AccountService implements IAccountService {
                 .orElseThrow
                         (() -> new AccountNotFoundException(String.format("Account %d not found",id)));
     }
-
     protected Account addOrUpdateAccount(Account account){
         Validation.validateAccountRequest(account);
         return accountRepository.save(account);

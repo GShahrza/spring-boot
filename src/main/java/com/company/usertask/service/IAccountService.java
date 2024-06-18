@@ -1,6 +1,8 @@
 package com.company.usertask.service;
 
+import com.company.usertask.dto.request.AccountCriteria;
 import com.company.usertask.dto.request.AccountRequestDTO;
+import com.company.usertask.dto.request.PageCriteria;
 import com.company.usertask.dto.response.AccountResponseDTO;
 import com.company.usertask.util.result.DataResult;
 import com.company.usertask.util.result.Result;
@@ -9,7 +11,7 @@ import java.util.List;
 
 public interface IAccountService {
 
-    DataResult<List<AccountResponseDTO>> getAllAccounts();
+    DataResult<List<AccountResponseDTO>> getAllAccounts(PageCriteria pageCriteria, AccountCriteria accountCriteria);
 
     DataResult<AccountResponseDTO> getAccountById(Long id);
 

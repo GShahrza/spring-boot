@@ -1,6 +1,8 @@
 package com.company.usertask.controller;
 
+import com.company.usertask.dto.request.AccountCriteria;
 import com.company.usertask.dto.request.AccountRequestDTO;
+import com.company.usertask.dto.request.PageCriteria;
 import com.company.usertask.dto.response.AccountResponseDTO;
 import com.company.usertask.service.IAccountService;
 import com.company.usertask.util.result.DataResult;
@@ -21,8 +23,8 @@ public class AccountController {
     final IAccountService accountService;
 
     @GetMapping
-    public DataResult<List<AccountResponseDTO>> getAllAccounts(){
-        return accountService.getAllAccounts();
+    public DataResult<List<AccountResponseDTO>> getAllAccounts(PageCriteria pageCriteria, AccountCriteria accountCriteria){
+        return accountService.getAllAccounts(pageCriteria, accountCriteria);
     }
 
     @GetMapping(path = "/{id}")
